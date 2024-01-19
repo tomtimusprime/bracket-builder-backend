@@ -1,0 +1,27 @@
+volumes:
+  db-data:
+
+services:
+  db:
+    image: bitnami/mysql
+    volumes:
+      - ./db_setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db-data:/bitnami/mysql/data
+
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: brackets_db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    links:
+      - db
+    environment:
+      DATABASE_URL: mysql://root@db/brackets_db
+      PORT: 3002
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/app
