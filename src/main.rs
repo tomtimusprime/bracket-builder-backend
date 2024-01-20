@@ -1,5 +1,6 @@
 use anyhow::Result;
 use axum::{Extension, Router};
+use std::env;
 use tokio::net::TcpListener;
 mod db;
 mod rest;
@@ -15,7 +16,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .nest_service("/brackets", rest::bracket_service())
         .layer(Extension(connection_pool));
 
-    let listener = TcpListener::bind("0.0.0.0:3002").await?;
+    let addr = env::var("LISTEN_ADDR").unwrap_or("0.0.0.0".to_string());
+    let port = env::var("PORT").unwrap_or("3002".to_string());
+
+    let listener = TcpListener::bind(format!("{addr}:{port}")).await?;
     let addr = listener.local_addr()?;
     println!("Listening on {:?}", addr);
 
