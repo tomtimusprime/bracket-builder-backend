@@ -1,8 +1,8 @@
-create database brackets_db;
+-- create database brackets_db;
 use brackets_db;
 
 /*Bracket Table*/
-CREATE TABLE Brackets (
+CREATE TABLE IF NOT EXISTS Brackets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     topic VARCHAR(255) NOT NULL,
     size INT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Brackets (
 );
 
 /*Bracket Items Table*/
-CREATE TABLE bracket_items (
+CREATE TABLE IF NOT EXISTS bracket_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     bracket_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE bracket_items (
 );
 
 /*Bracket Rounds Table*/
-CREATE TABLE bracket_rounds (
+CREATE TABLE IF NOT EXISTS bracket_rounds (
     bracket_id INT NOT NULL,
     item1_id INT NOT NULL,
     item2_id INT NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE bracket_rounds (
 );
 
 /*Bracket Votes Table*/
-CREATE TABLE bracket_votes (
+CREATE TABLE IF NOT EXISTS bracket_votes (
     bracket_id INT NOT NULL,
     item_id INT NOT NULL,
     round_id INT NOT NULL,
@@ -40,6 +40,6 @@ CREATE TABLE bracket_votes (
     PRIMARY KEY (bracket_id, item_id, round_id)
 );
 
-INSERT INTO Brackets (topic, size, created_at) VALUES ('Favorite Fruits', 8, '2024-01-15 10:00:00');
+-- INSERT INTO Brackets (topic, size, created_at) VALUES ('Favorite Fruits', 8, '2024-01-15 10:00:00');
 
-select * from brackets
+-- SELECT * from Brackets;
